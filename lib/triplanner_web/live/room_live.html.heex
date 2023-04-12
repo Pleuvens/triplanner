@@ -1,0 +1,9 @@
+<h1>Plan your trip</h1>
+<%= @room.name %>
+<%= for plan <- @room.plans do %>
+  <div class="flex flex-row max-w-base rounded-sm overflow-hidden shadow-lg m-16">
+    <time class="p-5" datetime={plan.hour}><%= plan.hour.hour %> : <%= plan.hour.minute %></time>
+    <p class="p-5 border-l"><%= plan.duration %> m</p>
+    <h3 class="p-5 font-medium text-2xl text-gray-darker border-l border-gray-light"><%= plan.name %></h3>
+  </div>
+<% end %>

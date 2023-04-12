@@ -17,7 +17,7 @@ defmodule TriplannerWeb.Router do
   scope "/", TriplannerWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", HomeLive
     live "/:room_name", RoomLive
   end
 
