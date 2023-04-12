@@ -6,6 +6,7 @@ defmodule Triplanner.Plan do
     field :hour, :naive_datetime
     field :duration, :integer
     field :notes, :string
+    belongs_to :room, Triplanner.Room
   end
 
   def changeset(plan, params \\ %{}) do
