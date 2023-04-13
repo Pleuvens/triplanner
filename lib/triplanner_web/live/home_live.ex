@@ -6,7 +6,12 @@ defmodule TriplannerWeb.HomeLive do
   end
 
   def handle_event("join_room", %{"name" => name}, socket) do    
-    {:noreply, push_redirect(socket, to: "/#{name}")}
+    case Triplanner.get_room(name) do
+      nil ->
+        IO.inspect("room not found")
+        {:noreply, socket}
+      _ -> {:noreply, push_redirect(socket, to: "/#{name}")}
+    end
   end
 
   def handle_event("create_join_room", %{"name" => name}, socket) do    

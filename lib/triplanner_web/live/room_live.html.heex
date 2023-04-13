@@ -1,6 +1,7 @@
 <h1>Plan your trip</h1>
 <%= @room.name %>
 <button phx-click="create_plan" phx-value-room={@room.name}>New Plan</button>
+<button phx-click="prev_view">Leave room</button>
 <%= for plan <- @room.plans do %>
   <button phx-click="update_plan" phx-value-room={@room.name} phx-value-plan={plan.id} class="flex flex-row max-w-base rounded-sm overflow-hidden shadow-lg m-16">
     <time class="p-5" datetime={plan.hour}><%= plan.hour.hour %> : <%= plan.hour.minute %></time>
