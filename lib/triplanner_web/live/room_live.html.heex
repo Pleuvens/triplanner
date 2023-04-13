@@ -2,14 +2,17 @@
 <%= @room.name %>
 <button phx-click="create_plan" phx-value-room={@room.name}>New Plan</button>
 <button phx-click="prev_view">Leave room</button>
-<%= for plan <- @room.plans do %>
-  <button phx-click="update_plan" phx-value-room={@room.name} phx-value-plan={plan.id} class="flex flex-row max-w-base rounded-sm overflow-hidden shadow-lg m-16">
-    <%= if plan.hour != nil do %>
-    <time class="p-5" datetime={plan.hour}><%= plan.hour.hour %> : <%= plan.hour.minute %></time>
-    <% end %>
-    <%= if plan.duration != nil do %>
-    <p class="p-5 border-l"><%= plan.duration %> m</p>
-    <% end %>
-    <h3 class="p-5 font-medium text-2xl text-gray-darker border-l border-gray-light"><%= plan.name %></h3>
-  </button>
+<%= for {date, plan} <- @room.plans do %>
+  <p><%= if date != nil, do: date, else: "To planify" %></p>
+  <%= for p <- plan do %>
+    <button phx-click="update_plan" phx-value-room={@room.name} phx-value-plan={p.id} class="flex flex-row max-w-base rounded-sm overflow-hidden shadow-lg m-16">
+      <%= if p.hour != nil do %>
+      <time class="p-5" datetime={p.hour}><%= p.hour.hour %> : <%= p.hour.minute %></time>
+      <% end %>
+      <%= if p.duration != nil do %>
+      <p class="p-5 border-l"><%= p.duration %> m</p>
+      <% end %>
+      <h3 class="p-5 font-medium text-2xl text-gray-darker border-l border-gray-light"><%= p.name %></h3>
+    </button>
+  <% end %>
 <% end %>

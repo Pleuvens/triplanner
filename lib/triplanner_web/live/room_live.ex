@@ -24,7 +24,7 @@ defmodule TriplannerWeb.RoomLive do
 
   def handle_info(:update, socket) do
     Process.send_after(self(), :update, 3000)
-    plans = Triplanner.get_room_info(socket.assigns.room.name)
+    plans = Triplanner.get_room_info(socket.assigns.room.name) 
     {:noreply, assign(socket, :room, %{name: socket.assigns.room.name, plans: plans, pid: socket.assigns.room.pid})}
   end
 

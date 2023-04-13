@@ -10,9 +10,15 @@ defmodule Triplanner do
 
   def get_room_info(room_name) do
     from(Triplanner.Plan, as: :plan)
+    |> order_by([asc: :hour])
     |> join(:left, [plan: plan], room in assoc(plan, :room), as: :room)
     |> where([room: room], room.name == ^room_name)
     |> Triplanner.Repo.all()
+    |> Enum.group_by(fn p ->
+        if p.hour != nil do
+          inspect(p.hour.day) <> " / " <> inspect(p.hour.month)
+        end
+      end)
   end
 
   def get_room(room_name) do
