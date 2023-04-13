@@ -13,4 +13,8 @@ defmodule TriplannerWeb.RoomLive do
     plans = Triplanner.get_room_info(socket.assigns.room.name)
     {:noreply, assign(socket, :room, %{name: socket.assigns.room.name, plans: plans})}
   end
+
+  def handle_event("update_plan", %{"room" => room, "plan" => plan}, socket) do
+    {:noreply, push_redirect(socket, to: "/#{room}/#{plan}/edit")}
+  end
 end

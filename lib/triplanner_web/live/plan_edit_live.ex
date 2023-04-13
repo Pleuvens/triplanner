@@ -12,4 +12,8 @@ defmodule TriplannerWeb.PlanEditLive do
     Triplanner.update_plan(socket.assigns.form.data.id, plan["name"], NaiveDateTime.from_iso8601!(plan["hour"] <> ":00"), Integer.parse(plan["duration"]) |> elem(0), nil)
     {:noreply, push_redirect(socket, to: "/#{socket.assigns.room_name}")}
   end
+
+  def handle_event("prev_view", _params, socket) do
+    {:noreply, push_redirect(socket, to: "/#{socket.assigns.room_name}")}
+  end
 end
