@@ -1,0 +1,8 @@
+<h1>Create your plan</h1>
+<.form for={@form} phx-submit="create_plan">
+  <.input type="text" field={@form[:name]}/>
+  <.input type="datetime-local" field={@form[:hour]}/>
+  <.input type="number" field={@form[:duration]}/>
+  <button>Create</button>
+  <button phx-click="prev_view">Cancel</button>
+</.form>

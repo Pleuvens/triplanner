@@ -17,4 +17,8 @@ defmodule TriplannerWeb.RoomLive do
   def handle_event("update_plan", %{"room" => room, "plan" => plan}, socket) do
     {:noreply, push_redirect(socket, to: "/#{room}/#{plan}/edit")}
   end
+
+  def handle_event("create_plan", %{"room" => room}, socket) do
+    {:noreply, push_redirect(socket, to: "/#{room}/create")}
+  end
 end

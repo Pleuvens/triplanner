@@ -1,7 +1,7 @@
 defmodule TriplannerWeb.HomeLive do
   use TriplannerWeb, :live_view
 
-  def mount(_params, token, socket) do
+  def mount(_params, _token, socket) do
     {:ok, assign(socket, form: to_form(%{}))}
   end
 

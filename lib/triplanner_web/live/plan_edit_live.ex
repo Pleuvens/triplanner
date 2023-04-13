@@ -3,7 +3,6 @@ defmodule TriplannerWeb.PlanEditLive do
 
   def mount(%{"room_name" => room_name, "plan_id" => plan_id}, _token, socket) do
     plan = Triplanner.get_plan(plan_id) |> Ecto.Changeset.change() |> to_form
-    IO.inspect(plan)
     {:ok, assign(socket, form: plan, room_name: room_name)}
   end
 
