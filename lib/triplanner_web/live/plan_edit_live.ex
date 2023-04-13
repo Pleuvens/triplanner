@@ -12,6 +12,11 @@ defmodule TriplannerWeb.PlanEditLive do
     {:noreply, push_redirect(socket, to: "/#{socket.assigns.room_name}")}
   end
 
+  def handle_event("delete_plan", _params, socket) do
+    Triplanner.delete_plan(socket.assigns.form.data.id)
+    {:noreply, push_redirect(socket, to: "/#{socket.assigns.room_name}")}
+  end
+
   def handle_event("prev_view", _params, socket) do
     {:noreply, push_redirect(socket, to: "/#{socket.assigns.room_name}")}
   end
