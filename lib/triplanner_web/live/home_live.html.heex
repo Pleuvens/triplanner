@@ -1,4 +1,9 @@
-<.form for={@form} phx-submit="save">
+<.form for={@form} phx-submit="create_join_room">
   <.input type="text" field={@form[:name]}/>
-  <button>Create/Join room</button>
+  <button>Create room</button>
+</.form>
+
+<.form for={@form} phx-submit="join_room">
+  <.input type="text" field={@form[:name]}/>
+  <button>Join room</button>
 </.form>

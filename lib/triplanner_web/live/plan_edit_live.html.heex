@@ -1,0 +1,7 @@
+<h1>Edit your plan</h1>
+<.form for={@form} phx-submit="update_plan">
+  <.input type="text" field={@form[:name]}/>
+  <.input type="datetime-local" field={@form[:hour]}/>
+  <.input type="number" field={@form[:duration]}/>
+  <button>Update</button>
+</.form>

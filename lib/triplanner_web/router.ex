@@ -19,6 +19,8 @@ defmodule TriplannerWeb.Router do
 
     live "/", HomeLive
     live "/:room_name", RoomLive
+    live "/:room_name/:plan_id/edit", PlanEditLive
+    live "/:room_name/create", PlanCreateLive
   end
 
   # Other scopes may use custom stacks.
