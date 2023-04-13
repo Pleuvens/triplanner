@@ -8,7 +8,18 @@ defmodule TriplannerWeb.PlanEditLive do
 
   def handle_event("update_plan", params, socket) do
     plan = params["plan"]
-    Triplanner.update_plan(socket.assigns.form.data.id, plan["name"], NaiveDateTime.from_iso8601!(plan["hour"] <> ":00"), Integer.parse(plan["duration"]) |> elem(0), nil)
+
+    date = case plan["hour"] do
+      "" -> nil
+      date_time -> NaiveDateTime.from_iso8601!(date_time <> ":00")
+    end
+
+    duration = case plan["duration"] do
+      "" -> nil
+      value -> Integer.parse(value) |> elem(0)
+    end
+
+    Triplanner.update_plan(socket.assigns.form.data.id, plan["name"], date, duration, nil)
     {:noreply, push_redirect(socket, to: "/#{socket.assigns.room_name}")}
   end
 

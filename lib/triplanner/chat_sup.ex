@@ -6,7 +6,7 @@ defmodule Triplanner.ChatSup do
     DynamicSupervisor.start_link(__MODULE__, :ok, name: __MODULE__)
   end
 
-  def start_child(room_name, id) do
+  def start_child({room_name, id}) do
     DynamicSupervisor.start_child(__MODULE__,
       %{
         id: Triplanner.Chat,

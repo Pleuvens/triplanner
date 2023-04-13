@@ -4,7 +4,7 @@ defmodule TriplannerWeb.RoomLive do
   def mount(%{"room_name" => room_name}, _token, socket) do
     if connected?(socket), do: Process.send_after(self(), :update, 30000)
 
-    pid = case Triplanner.ChatSup.start_child(room_name, socket.id) do
+    pid = case Triplanner.ChatSup.start_child({room_name, socket.id}) do
       {:ok, p_id} -> p_id
       {:error, {:already_started, p_id}} ->
         GenServer.cast(String.to_atom(room_name), {:add_socket_id, socket.id})
