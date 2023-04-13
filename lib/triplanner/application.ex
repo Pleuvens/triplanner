@@ -26,6 +26,9 @@ defmodule Triplanner.Application do
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Triplanner.Supervisor]
     Supervisor.start_link(children, opts)
+
+    # Start chat supervisor
+    Triplanner.ChatSup.start_link(:ok)
   end
 
   # Tell Phoenix to update the endpoint configuration
