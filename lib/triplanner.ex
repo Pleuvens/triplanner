@@ -16,7 +16,7 @@ defmodule Triplanner do
     |> Triplanner.Repo.all()
     |> Enum.group_by(fn p ->
         if p.hour != nil do
-          inspect(p.hour.day) <> " / " <> inspect(p.hour.month)
+          String.pad_leading(inspect(p.hour.day), 2, "0") <> " / " <> String.pad_leading(inspect(p.hour.month), 2, "0") <> " / " <> inspect(p.hour.year)
         end
       end)
   end
@@ -47,5 +47,13 @@ defmodule Triplanner do
   def delete_plan(id) do
     Triplanner.Repo.get_by(Triplanner.Plan, id: id)
     |> Triplanner.Repo.delete()
+  end
+
+  def get_messages(room_name) do
+    GenServer.call(String.to_atom(room_name), {:get_messages})
+  end
+
+  def send_message(room_name, msg) do
+    GenServer.cast(String.to_atom(room_name), {:push_message, msg})
   end
 end

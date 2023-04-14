@@ -12,7 +12,8 @@ defmodule TriplannerWeb.RoomLive do
     end
 
     plans = Triplanner.get_room_info(room_name)
-    {:ok, assign(socket, :room, %{name: room_name, plans: plans, pid: pid})}
+    messages = Triplanner.get_messages(room_name)
+    {:ok, assign(socket, room: %{name: room_name, plans: plans, pid: pid, messages: messages}, chat: to_form(%{}))}
   end
 
   def terminate(_reason, socket) do
@@ -25,7 +26,8 @@ defmodule TriplannerWeb.RoomLive do
   def handle_info(:update, socket) do
     Process.send_after(self(), :update, 3000)
     plans = Triplanner.get_room_info(socket.assigns.room.name) 
-    {:noreply, assign(socket, :room, %{name: socket.assigns.room.name, plans: plans, pid: socket.assigns.room.pid})}
+    messages = Triplanner.get_messages(socket.assigns.room.name)
+    {:noreply, assign(socket, room: %{name: socket.assigns.room.name, plans: plans, pid: socket.assigns.room.pid, messages: messages}, chat: to_form(%{}))}
   end
 
   def handle_event("update_plan", %{"room" => room, "plan" => plan}, socket) do
@@ -38,5 +40,11 @@ defmodule TriplannerWeb.RoomLive do
 
   def handle_event("prev_view", _params, socket) do
     {:noreply, push_redirect(socket, to: "/")}
+  end
+
+  def handle_event("send_msg", %{"msg" => msg}, socket) do
+    Triplanner.send_message(socket.assigns.room.name, msg)
+    messages = [msg | socket.assigns.room.messages]
+    {:noreply, assign(socket, room: %{name: socket.assigns.room.name, plans: socket.assigns.room.plans, pid: socket.assigns.room.pid, messages: messages}, chat: to_form(%{}))}
   end
 end

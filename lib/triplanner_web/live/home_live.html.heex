@@ -1,9 +1,18 @@
-<.form for={@form} phx-submit="create_join_room">
-  <.input type="text" field={@form[:name]}/>
-  <button>Create room</button>
+<div class="flex flex-col items-center mt-9">
+<h1 class="text-5xl font-extrabold">Triplanner<small class="ml-2 font-semibold text-orange-500 dark:text-orange-400">Plan your trips with your loved ones !</small></h1>
+<.form for={@form} phx-submit="create_join_room" class="flex flex-col mt-9 w-3/12 ml-6/12">
+  <div class="flex flex-row">
+    <.input type="text" field={@form[:name]} placeholder="room name"/>
+    <button class="ml-5 bg-transparent hover:bg-orange-500 text-orange-700 font-semibold hover:text-white py-1 px-2 border border-orange-500 hover:border-transparent rounded">Create room</button>
+  </div>
+  <%= if @error_create != nil do %><p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Oh, snapp!</span> <%= @error_create %></p><% end %>
 </.form>
 
-<.form for={@form} phx-submit="join_room">
-  <.input type="text" field={@form[:name]}/>
-  <button>Join room</button>
+<.form for={@form} phx-submit="join_room" class="flex flex-col mt-9 w-3/12 ml-6/12">
+  <div class="flex flex-row">
+    <.input type="text" field={@form[:name]} placeholder="room name"/>
+    <button class="ml-5 bg-transparent hover:bg-orange-500 text-orange-700 font-semibold hover:text-white py-1 px-2 border border-orange-500 hover:border-transparent rounded">Join room</button>
+  </div>
+  <%= if @error_join != nil do %><p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Oh, snapp!</span> <%= @error_join %></p><% end %>
 </.form>
+</div>

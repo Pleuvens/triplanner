@@ -10,5 +10,6 @@ defmodule Triplanner.Room do
     room
     |> Ecto.Changeset.cast(params, [:name])
     |> Ecto.Changeset.validate_required([:name])
+    |> Ecto.Changeset.unique_constraint(:name)
   end
 end
