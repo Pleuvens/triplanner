@@ -8,28 +8,28 @@
   <div class="flex flex-col my-5 mx-10 border border-orange-500 rounded p-5">
     <p class="mb-5 text-2xl font-bold text-orange-700"><%= if date != nil, do: date, else: "Unplanned" %></p>
     <%= for p <- plan do %>
-      <button phx-click="update_plan" phx-value-room={@room.name} phx-value-plan={p.id} class="flex flex-row max-w-base rounded-sm overflow-hidden mb-10">
+      <button phx-click="update_plan" phx-value-room={@room.name} phx-value-plan={p.id} class="border border-orange-500 flex flex-row max-w-base rounded-sm overflow-hidden mb-10">
         <%= if p.hour != nil do %>
-        <time class="p-5" datetime={p.hour}><%= p.hour.hour %> : <%= p.hour.minute %></time>
+        <time class="p-5" datetime={p.hour}><%= Triplanner.format_date(p.hour.hour) %> : <%= Triplanner.format_date(p.hour.minute) %></time>
         <% end %>
         <%= if p.duration != nil do %>
-        <p class="p-5"><%= p.duration %> m</p>
+        <p class="p-5 border-l border-orange-500"><%= p.duration %> m</p>
         <% end %>
-        <h3 class="p-5 font-medium text-xl text-gray-darker"><%= p.name %></h3>
+        <h3 class="border-l border-orange-500 p-5 font-medium text-xl text-gray-darker"><%= p.name %></h3>
       </button>
     <% end %>
   </div>
 <% end %>
 </div>
 
-<div class="fixed z-1 bottom-0 right-10 h-25 w-15 border border-orange-500 rounded">
-  <div class="flex flex-col">
+<div class="fixed z-1 bottom-0 right-10 h-1/2 w-3/12 border border-orange-700 bg-orange-700 text-white rounded flex flex-col justify-end">
+  <div class="flex flex-col overflow-y-scroll">
     <%= for msg <- @room.messages do %>
-      <p><%= msg %></p>
+      <p class="flex justify-start items-center w-full border-t p-3"><%= msg %></p>
     <% end %>
   </div>
-  <.form for={@chat} phx-submit="send_msg" class="flex flex-row">
-    <.input type="text" field={@chat[:msg]} placeholder="say something..."/>
-    <button>Send</button>
+  <.form for={@chat} phx-submit="send_msg" class="flex flex-row border-t justify-end bg-white">
+    <.input type="text" field={@chat[:msg]} placeholder="say something..." />
+    <button class="ml-5 bg-transparent hover:bg-orange-500 text-orange-700 font-semibold hover:text-white py-1 px-2 border border-orange-500 hover:border-transparent rounded">Send</button>
   </.form>
 </div>

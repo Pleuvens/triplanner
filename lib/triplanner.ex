@@ -8,6 +8,12 @@ defmodule Triplanner do
   """
   import Ecto.Query
 
+  def format_date(value) do
+    value
+    |> inspect
+    |> String.pad_leading(2, "0")
+  end
+
   def get_room_info(room_name) do
     from(Triplanner.Plan, as: :plan)
     |> order_by([asc: :hour])
@@ -16,7 +22,7 @@ defmodule Triplanner do
     |> Triplanner.Repo.all()
     |> Enum.group_by(fn p ->
         if p.hour != nil do
-          String.pad_leading(inspect(p.hour.day), 2, "0") <> " / " <> String.pad_leading(inspect(p.hour.month), 2, "0") <> " / " <> inspect(p.hour.year)
+          format_date(p.hour.day) <> " / " <> format_date(p.hour.month) <> " / " <> inspect(p.hour.year)
         end
       end)
   end

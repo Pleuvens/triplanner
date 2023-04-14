@@ -1,8 +1,10 @@
-<h1>Create your plan</h1>
-<.form for={@form} phx-submit="create_plan">
+<h1 class="text-5xl font-extrabold mt-9">Triplanner<small class="ml-2 font-semibold text-orange-500 dark:text-orange-400">Create your plan !</small></h1>
+<.form for={@form} phx-submit="create_plan" class="mt-9">
   <.input type="text" field={@form[:name]}/>
   <.input type="datetime-local" field={@form[:hour]}/>
   <.input type="number" field={@form[:duration]}/>
-  <button>Create</button>
-  <button phx-click="prev_view">Cancel</button>
+  <div class="mt-9">
+    <button class="ml-5 bg-transparent hover:bg-orange-500 text-orange-700 font-semibold hover:text-white py-1 px-2 border border-orange-500 hover:border-transparent rounded">Create</button>
+    <button phx-click="prev_view" class="ml-5 bg-transparent hover:bg-gray-500 text-gray-700 font-semibold hover:text-white py-1 px-2 border border-gray-500 hover:border-transparent rounded">Cancel</button>
+  </div>
 </.form>

@@ -2,7 +2,7 @@ defmodule TriplannerWeb.RoomLive do
   use TriplannerWeb, :live_view
 
   def mount(%{"room_name" => room_name}, _token, socket) do
-    if connected?(socket), do: Process.send_after(self(), :update, 3000)
+    if connected?(socket), do: Process.send_after(self(), :update, 1000)
 
     pid = case Triplanner.ChatSup.start_child({room_name, socket.id}) do
       {:ok, p_id} -> p_id
@@ -24,7 +24,7 @@ defmodule TriplannerWeb.RoomLive do
   end
 
   def handle_info(:update, socket) do
-    Process.send_after(self(), :update, 3000)
+    Process.send_after(self(), :update, 1000)
     plans = Triplanner.get_room_info(socket.assigns.room.name) 
     messages = Triplanner.get_messages(socket.assigns.room.name)
     {:noreply, assign(socket, room: %{name: socket.assigns.room.name, plans: plans, pid: socket.assigns.room.pid, messages: messages}, chat: to_form(%{}))}
@@ -43,8 +43,12 @@ defmodule TriplannerWeb.RoomLive do
   end
 
   def handle_event("send_msg", %{"msg" => msg}, socket) do
-    Triplanner.send_message(socket.assigns.room.name, msg)
-    messages = [msg | socket.assigns.room.messages]
+    messages = case msg do
+      "" -> socket.assigns.room.messages
+      _ ->
+        Triplanner.send_message(socket.assigns.room.name, msg)
+        socket.assigns.room.messages ++ [msg]
+    end
     {:noreply, assign(socket, room: %{name: socket.assigns.room.name, plans: socket.assigns.room.plans, pid: socket.assigns.room.pid, messages: messages}, chat: to_form(%{}))}
   end
 end

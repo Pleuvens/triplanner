@@ -12,7 +12,7 @@ defmodule Triplanner.Chat do
 
   @impl true
   def handle_cast({:push_message, msg}, state) do
-    {:noreply, %{messages: [msg | state.messages], ids: state.ids}}
+    {:noreply, %{messages: state.messages ++ [msg], ids: state.ids}}
   end
 
   @impl true
