@@ -6,8 +6,8 @@ import Config
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
 config :triplanner, Triplanner.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "dev",
+  password: "dev",
   hostname: "localhost",
   database: "triplanner_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,

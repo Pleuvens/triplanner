@@ -3,7 +3,7 @@ defmodule Triplanner.Repo.Migrations.CreateRooms do
 
   def change do
     create table(:rooms) do
-      add :name, :string
+      add :name, :string, null: false
     end
 
     create unique_index(:rooms, [:name])
